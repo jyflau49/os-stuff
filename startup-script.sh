@@ -9,9 +9,6 @@ fi
 # Update the package list
 apt-get update
 
-# Upgrade the packages
-apt-get upgrade -y
-
 # Install unattended-upgrades package with automatic yes to prompts
 apt-get install -y unattended-upgrades
 
