@@ -1,0 +1,64 @@
+# ~/.bash_local: Host-specific bash configuration TEMPLATE
+# Copy this file to ~/.bash_local on new VMs and customize as needed
+
+# Environment Variables - Machine Specific
+# ----------------------------------------
+
+# Kubernetes Configuration
+# Uncomment and modify the path that exists on this VM:
+# export KUBECONFIG='/root/k8s/kubeconfig/personal-kubeconfig.yaml'
+# export KUBECONFIG="$HOME/.kube/config"
+# export KUBECONFIG='/path/to/your/kubeconfig.yaml'
+
+# Vault Configuration (if using HashiCorp Vault)
+# export VAULT_ADDR='https://vault.yourdomain.com:443'
+
+# Go Configuration (if using Go)
+# export GOPATH='/snap/bin/'
+# export GOPATH="$HOME/go"
+
+# Cloud Provider Configuration
+# GCP:
+# export GCP_PROJECT_ID="your-project-id"
+# AWS:
+# export AWS_DEFAULT_REGION="us-east-1"
+# export AWS_PROFILE="default"
+# Azure:
+# export AZURE_SUBSCRIPTION_ID="your-subscription-id"
+
+# Host-Specific Aliases
+# ---------------------
+# Add aliases specific to this machine/environment:
+# alias ssh-prod='ssh user@prod-server.example.com'
+# alias ssh-dev='ssh user@dev-server.example.com'
+# alias mount-nas='sudo mount -t nfs nas.local:/volume1/data /mnt/nas'
+# alias logs='tail -f /var/log/application.log'
+
+# Host-Specific Functions
+# ----------------------
+# Add custom functions for this environment:
+# function deploy-staging() {
+#     cd /path/to/project && ./deploy.sh staging
+# }
+# 
+# function backup-db() {
+#     mysqldump -u root -p mydb > /backup/mydb_$(date +%Y%m%d).sql
+# }
+
+# Directory Shortcuts
+# -------------------
+# export PROJECT_DIR="/path/to/main/project"
+# export LOG_DIR="/var/log/myapp"
+# alias cdp='cd $PROJECT_DIR'
+# alias cdl='cd $LOG_DIR'
+
+# Additional Tool Configurations
+# ------------------------------
+# Load additional completion scripts or configurations:
+# if [ -f "/usr/local/bin/custom-completion.bash" ]; then
+#     source "/usr/local/bin/custom-completion.bash"
+# fi
+
+# Host identification (useful for multi-VM management)
+# export VM_ROLE="production"  # or "development", "staging", etc.
+# export VM_LOCATION="us-east-1"  # or your datacenter/region
