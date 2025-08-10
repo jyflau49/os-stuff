@@ -134,7 +134,7 @@ fi
 
 # For terraform command
 if command -v terraform &> /dev/null && [ -x /usr/bin/terraform ]; then
-  complete -C /usr/bin/terraform terraform
+  complete -C /usr/bin/terraform terraform t
 fi
 
 # 4. Load Host-Specific Configuration
