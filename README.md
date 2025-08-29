@@ -1,97 +1,69 @@
-# Ubuntu VM Setup Templates
+# OS Bootstrap Toolkit
 
-This repository contains standardized configuration templates for new Ubuntu VMs.
+A collection of tools and scripts for rapidly setting up fresh VMs with standardized configurations.
 
 ## Files
 
-- **`startup-script.sh`** - Main setup script for new Ubuntu VMs
-- **`bashrc.template`** - Portable `.bashrc` configuration
-- **`bash_local.template`** - Template for host-specific bash configurations
+- **`startup-script.sh`** - Complete VM setup: security updates, shell config, maintenance automation
+- **`bashrc.template`** - Portable `.bashrc` with conditional tool support
+- **`bash_local.template`** - Template for host-specific customizations
+- **`linode-bootstrap.sh`** - Minimal wrapper for Linode StackScript
 
 ## Quick Deployment
 
-### Method 1: Clone and Run (Recommended)
+### Clone and Run
 ```bash
 # On new Ubuntu VM (as root):
-git clone <your-repo-url> /tmp/os-stuff
+git clone https://github.com/jyflau49/os-stuff.git /tmp/os-stuff
 cd /tmp/os-stuff
 chmod +x startup-script.sh
 ./startup-script.sh
-# Then customize /root/.bash_local for this host
 ```
 
-### Method 2: Direct Download and Run
-```bash
-# Download and run startup script directly:
-curl -fsSL <raw-github-url>/startup-script.sh | sudo bash
-```
+## What Gets Configured
 
-## What the Startup Script Does
+### 🔒 System Security & Updates
+- **Strict error handling** - Scripts fail fast on errors
+- **Package updates** - Full system upgrade on first run
+- **Unattended upgrades** - Automatic security updates
+- **Scheduled reboots** - 2:00 AM when kernel updates require it
+- **Package cleanup** - Weekly removal of unused packages
 
-### System Updates & Security
-- ✅ Enables strict bash error handling
-- ✅ Updates package lists and upgrades existing packages
-- ✅ Installs and configures unattended-upgrades for automatic security updates
-- ✅ Sets up automatic reboots at 2:00 AM when needed
-- ✅ Enables APT periodic maintenance (autoremove, autoclean)
+### 🐚 Shell Environment
+- **Portable `.bashrc`** - Works across different VMs and tool installations
+- **Conditional tool support** - Aliases/completions only load if tools exist
+- **Host-specific configs** - `.bash_local` for per-VM customizations
+- **Smart completions** - kubectl, terraform, docker, etc. (when installed)
 
-### Shell Environment
-- ✅ Installs portable `.bashrc` with conditional tool support
-- ✅ Creates `.bash_local` template for host-specific customizations
-- ✅ Sets up completion for kubectl, terraform, and other tools (when available)
+### 🔧 Linode Bootstrap Integration
+- **StackScript ready** - `linode-bootstrap.sh` clones repo and runs setup
+- **Git-based updates** - Easy to maintain and version control
+- **Minimal StackScript** - Keeps Linode StackScript simple and flexible
 
 ## Post-Installation
 
-### 1. Customize `.bash_local`
-Edit `/root/.bash_local` with host-specific settings:
+### Customize for Your Environment
 ```bash
-# Example customizations:
-export KUBECONFIG='/path/to/your/kubeconfig.yaml'
-export VAULT_ADDR='https://your-vault.example.com'
-export GCP_PROJECT_ID="your-project-id"
-alias ssh-prod='ssh user@prod-server.example.com'
-```
+# Edit /root/.bash_local with host-specific settings, for example:
+export KUBECONFIG='/path/to/kubeconfig.yaml'
+export VAULT_ADDR='https://vault.example.com'
+export GCP_PROJECT_ID="your-project"
+alias k='kubectl'
+alias t='terraform'
 
-### 2. Reload Shell Configuration
-```bash
+# Reload configuration
 source ~/.bashrc
-# or simply start a new shell session
 ```
-
-## Features
-
-### Automatic Updates
-- **Security updates**: Applied automatically
-- **Automatic reboots**: Scheduled for 2:00 AM when required
-- **Package cleanup**: Removes unused packages weekly
-
-### Portable Shell Environment
-- **Tool detection**: Aliases and completions only load if tools are installed
-- **Host-specific configs**: Separate file for machine-specific settings
-- **No hard-coded paths**: Won't break on VMs with different directory structures
-
-## Customization
-
-### Adding More Tools to Startup Script
-Edit `startup-script.sh` to install additional packages:
-```bash
-# Add after the unattended-upgrades installation:
-echo "[INFO] Installing additional tools..."
-apt-get install -y htop btop vim git curl wget jq
-```
-
-### Adding More Aliases/Functions
-Add to your local `.bash_local` file or modify the `bashrc.template` for global changes.
 
 ## Compatibility
 
-- **Tested on**: Ubuntu 20.04, 22.04, 24.04
-- **Requires**: Root access for initial setup
-- **Dependencies**: Standard Ubuntu packages only
+- **Tested**: Ubuntu 20.04, 22.04, 24.04 LTS
+- **Requirements**: sudo, internet
+- **Dependencies**: Standard Ubuntu repositories only
 
-## Security Notes
+## Security Considerations
 
-- Script requires root access for system configuration
-- Automatic reboots enabled - ensure this fits your maintenance windows
-- Only security updates are applied automatically by default
-- SSH and firewall hardening not included (can be added incrementally)
+- ⚠️ **Root access required** for system configuration
+- ⚠️ **Automatic reboots enabled** - plan maintenance windows accordingly
+- ✅ **Security-only updates** by default (not all package updates)
+- ✅ **No external dependencies** beyond standard Ubuntu packages

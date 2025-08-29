@@ -40,7 +40,7 @@
 # function deploy-staging() {
 #     cd /path/to/project && ./deploy.sh staging
 # }
-# 
+#
 # function backup-db() {
 #     mysqldump -u root -p mydb > /backup/mydb_$(date +%Y%m%d).sql
 # }

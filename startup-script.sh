@@ -10,7 +10,7 @@ trap 'echo "[ERROR] Script failed at line $LINENO" >&2' ERR
 export DEBIAN_FRONTEND=noninteractive
 
 # Ensure the script is running as root
-if [ "$EUID" -ne 0 ]; then 
+if [ "$EUID" -ne 0 ]; then
   echo "Please run as root"
   exit 1
 fi
