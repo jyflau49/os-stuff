@@ -126,6 +126,19 @@ if command -v docker &> /dev/null; then
   alias akamai-shell='docker run --rm -it -v "$HOME/.edgerc:/root/.edgerc:ro" -v "$HOME:/root" akamai/shell'
 fi
 
+# Modern Rust-based CLI utilities
+if command -v bat &> /dev/null; then
+  alias cat='bat --paging=never'
+fi
+
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init bash)"
+fi
+
+if command -v rg &> /dev/null; then
+  alias grep='rg'
+fi
+
 # 3. Setup Completions (only if tools and functions exist)
 # For kubectl alias 'k' (requires __start_kubectl to be defined from step 1)
 if type __start_kubectl &> /dev/null; then
@@ -144,6 +157,9 @@ if [ -f "$HOME/.bash_local" ]; then
     source "$HOME/.bash_local"
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Load NVM (Node Version Manager) if installed
+if [ -d "$HOME/.nvm" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+fi

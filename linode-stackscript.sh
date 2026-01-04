@@ -47,4 +47,4 @@ cd /
 rm -rf "$CLONE_DIR"
 
 echo "[INFO] Linode VM bootstrap complete!"
-echo "[INFO] Please customize /root/.bash_local for this host."
+echo "[INFO] Please customize /root/.bashrc_local for this host."

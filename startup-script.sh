@@ -98,14 +98,72 @@ fi
 # Create .bash_local for host-specific configurations
 if [ ! -f "/root/.bash_local" ]; then
     echo "[INFO] Creating .bash_local for host-specific configurations..."
-    if [ -f "$SCRIPT_DIR/bash_local.template" ]; then
-        cp "$SCRIPT_DIR/bash_local.template" /root/.bash_local
+    if [ -f "$SCRIPT_DIR/bashrc_local.template" ]; then
+        cp "$SCRIPT_DIR/bashrc_local.template" /root/.bash_local
         echo "[INFO] Copied .bash_local template from repository."
         echo "[INFO] Please customize /root/.bash_local for this host."
     else
-        echo "[WARN] bash_local.template not found in $SCRIPT_DIR"
+        echo "[WARN] bashrc_local.template not found in $SCRIPT_DIR"
         echo "[WARN] Please manually create /root/.bash_local for host-specific configs."
     fi
 else
     echo "[INFO] .bash_local already exists, skipping creation."
 fi
+
+# Optional: Install Docker (uncomment to enable)
+# echo "[INFO] Installing Docker..."
+# if curl -fsSL https://get.docker.com -o /tmp/get-docker.sh; then
+#     if sh /tmp/get-docker.sh; then
+#         echo "[INFO] Docker installed successfully."
+#         rm -f /tmp/get-docker.sh
+#     else
+#         echo "[WARN] Docker installation failed, continuing..."
+#         rm -f /tmp/get-docker.sh
+#     fi
+# else
+#     echo "[WARN] Failed to download Docker installation script, skipping..."
+# fi
+
+# Optional: Install Doppler CLI (uncomment to enable)
+# echo "[INFO] Installing Doppler CLI..."
+# if apt-get install -y apt-transport-https ca-certificates curl gnupg; then
+#     if curl -sLf --retry 3 --tlsv1.2 --proto "=https" \
+#         'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | \
+#         gpg --dearmor -o /usr/share/keyrings/doppler-archive-keyring.gpg; then
+#         echo "deb [signed-by=/usr/share/keyrings/doppler-archive-keyring.gpg] https://packages.doppler.com/public/cli/deb/debian any-version main" | \
+#             tee /etc/apt/sources.list.d/doppler-cli.list >/dev/null
+#         apt-get update
+#         if apt-get install -y doppler; then
+#             echo "[INFO] Doppler CLI installed successfully."
+#         else
+#             echo "[WARN] Doppler CLI installation failed, continuing..."
+#         fi
+#     else
+#         echo "[WARN] Failed to add Doppler GPG key, skipping..."
+#     fi
+# else
+#     echo "[WARN] Failed to install Doppler prerequisites, skipping..."
+# fi
+
+# Install modern Rust-based CLI utilities
+echo "[INFO] Installing modern CLI utilities (bat, zoxide, ripgrep)..."
+if apt-get install -y bat zoxide ripgrep; then
+    echo "[INFO] Modern CLI utilities installed successfully."
+    # Create bat symlink if needed (Ubuntu packages it as batcat)
+    if command -v batcat >/dev/null && ! command -v bat >/dev/null; then
+        ln -sf /usr/bin/batcat /usr/local/bin/bat
+        echo "[INFO] Created 'bat' symlink for batcat."
+    fi
+else
+    echo "[WARN] Failed to install some CLI utilities, continuing..."
+fi
+
+echo ""
+echo "[INFO] =========================================="
+echo "[INFO] Ubuntu VM setup complete!"
+echo "[INFO] =========================================="
+echo "[INFO] Next steps:"
+echo "[INFO]   1. Customize /root/.bash_local for host-specific settings"
+echo "[INFO]   2. Reload shell: source ~/.bashrc"
+echo "[INFO]   3. Review installed tools: bat, zoxide (z), ripgrep (rg)"
+echo "[INFO] =========================================="
