@@ -95,19 +95,19 @@ if [ -f "$SCRIPT_DIR/bashrc.template" ]; then
     echo "[INFO] Portable .bashrc installed."
 fi
 
-# Create .bash_local for host-specific configurations
-if [ ! -f "/root/.bash_local" ]; then
-    echo "[INFO] Creating .bash_local for host-specific configurations..."
+# Create .bashrc_local for host-specific configurations
+if [ ! -f "/root/.bashrc_local" ]; then
+    echo "[INFO] Creating .bashrc_local for host-specific configurations..."
     if [ -f "$SCRIPT_DIR/bashrc_local.template" ]; then
-        cp "$SCRIPT_DIR/bashrc_local.template" /root/.bash_local
-        echo "[INFO] Copied .bash_local template from repository."
-        echo "[INFO] Please customize /root/.bash_local for this host."
+        cp "$SCRIPT_DIR/bashrc_local.template" /root/.bashrc_local
+        echo "[INFO] Copied .bashrc_local template from repository."
+        echo "[INFO] Please customize /root/.bashrc_local for this host."
     else
         echo "[WARN] bashrc_local.template not found in $SCRIPT_DIR"
-        echo "[WARN] Please manually create /root/.bash_local for host-specific configs."
+        echo "[WARN] Please manually create /root/.bashrc_local for host-specific configs."
     fi
 else
-    echo "[INFO] .bash_local already exists, skipping creation."
+    echo "[INFO] .bashrc_local already exists, skipping creation."
 fi
 
 # Optional: Install Docker (uncomment to enable)
@@ -163,7 +163,7 @@ echo "[INFO] =========================================="
 echo "[INFO] Ubuntu VM setup complete!"
 echo "[INFO] =========================================="
 echo "[INFO] Next steps:"
-echo "[INFO]   1. Customize /root/.bash_local for host-specific settings"
+echo "[INFO]   1. Customize /root/.bashrc_local for host-specific settings"
 echo "[INFO]   2. Reload shell: source ~/.bashrc"
 echo "[INFO]   3. Review installed tools: bat, zoxide (z), ripgrep (rg)"
 echo "[INFO] =========================================="

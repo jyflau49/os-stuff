@@ -16,10 +16,11 @@ curl -fsSL https://raw.githubusercontent.com/jyflau49/os-stuff/main/startup-scri
 
 **Shell Environment**
 - Portable `.bashrc` with conditional tool support (kubectl, terraform, docker, etc.)
-- Host-specific `.bash_local` for per-VM customizations
+- Host-specific `.bashrc_local` for per-VM customizations
 - Modern CLI tools: bat, zoxide, ripgrep
 
-**Optional Integrations**
+**Optional Tools**
+Uncomment the relevant sections in `startup-script.sh` to enable.
 - Docker installation (official script)
 - Doppler CLI for secrets management
 
@@ -34,7 +35,7 @@ chmod +x startup-script.sh
 
 ## Post-Installation
 
-Customize `/root/.bash_local` for host-specific settings:
+Customize `/root/.bashrc_local` for host-specific settings:
 ```bash
 export KUBECONFIG='/path/to/kubeconfig.yaml'
 export VAULT_ADDR='https://vault.example.com'
@@ -43,7 +44,7 @@ alias k='kubectl'
 
 ## Linode StackScript
 
-Use `linode-bootstrap.sh` as a StackScript for automated deployment.
+Use `linode-stackscript.sh` as a StackScript for automated deployment.
 
 ## Compatibility
 
