@@ -158,6 +158,22 @@ else
     echo "[WARN] Failed to install some CLI utilities, continuing..."
 fi
 
+# Linux Kernel Lockdown: enforce integrity mode via GRUB
+echo "[INFO] Configuring kernel lockdown mode (integrity)..."
+GRUB_DEFAULT_FILE="/etc/default/grub"
+if [ -f "$GRUB_DEFAULT_FILE" ]; then
+    if grep -q "^GRUB_CMDLINE_LINUX_DEFAULT=" "$GRUB_DEFAULT_FILE"; then
+        sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="lockdown=integrity"/' "$GRUB_DEFAULT_FILE"
+    else
+        echo 'GRUB_CMDLINE_LINUX_DEFAULT="lockdown=integrity"' >> "$GRUB_DEFAULT_FILE"
+    fi
+    echo "[INFO] GRUB_CMDLINE_LINUX_DEFAULT set to: lockdown=integrity"
+    update-grub
+    echo "[INFO] GRUB updated successfully. A reboot is required to apply kernel lockdown."
+else
+    echo "[WARN] $GRUB_DEFAULT_FILE not found, skipping lockdown configuration."
+fi
+
 echo ""
 echo "[INFO] =========================================="
 echo "[INFO] Ubuntu VM setup complete!"
@@ -166,4 +182,5 @@ echo "[INFO] Next steps:"
 echo "[INFO]   1. Customize /root/.bashrc_local for host-specific settings"
 echo "[INFO]   2. Reload shell: source ~/.bashrc"
 echo "[INFO]   3. Review installed tools: bat, zoxide (z), ripgrep (rg)"
+echo "[INFO]   4. Reboot to apply kernel lockdown=integrity: reboot"
 echo "[INFO] =========================================="

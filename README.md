@@ -13,6 +13,7 @@ curl -fsSL https://raw.githubusercontent.com/jyflau49/os-stuff/main/startup-scri
 - Automatic security updates with unattended-upgrades
 - Scheduled reboots at 2:00 AM for kernel updates
 - Weekly package cleanup
+- Kernel lockdown in `integrity` mode (restricts unsigned kernel module loading)
 
 **Shell Environment**
 - Portable `.bashrc` with conditional tool support (kubectl, terraform, docker, etc.)
@@ -42,9 +43,10 @@ export VAULT_ADDR='https://vault.example.com'
 alias k='kubectl'
 ```
 
-## Linode StackScript
-
-Use `linode-stackscript.sh` as a StackScript for automated deployment.
+Then reboot to apply kernel lockdown:
+```bash
+reboot
+```
 
 ## Compatibility
 
